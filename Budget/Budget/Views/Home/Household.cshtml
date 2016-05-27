@@ -1,0 +1,53 @@
+﻿@model Budget.Models.Household
+
+
+<div class="page-body">
+    <div class="row">
+        <div class="col-lg-6 col-sm-6 col-xs-12">
+            <div class="widget">
+                <div class="widget-header bordered-bottom bordered-blue">
+                    <span class="widget-caption">@Model.Name - Users</span>
+                </div>
+                <div class="widget-body">
+                    
+                        @foreach (var user in Model.Users)
+                        {
+                            <p>
+                                @user.Name
+                            </p>
+                        }
+                            <br />
+                            <button type='button' class="btn btn-default"><i class="icon glyphicon glyphicon-envelope"></i>@Html.ActionLink(" Invite", "InviteToHousehold")</button>
+                            <span> </span>
+                            <button type='button' class="btn btn-default" data-target="#Leave" data-toggle="modal"><i class="icon glyphicon glyphicon-plane"></i> Leave Group</button>
+                       
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+                <div class="modal modal-primary" id="Leave" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon glyphicon glyphicon-remove"></i></button>
+                                <h4 class="modal-title">Leave Group</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>If you leave the group, you will no longer have access to your Accounts, Transactions and Budget. Are you sure you want to leave the group ? </p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-warning" data-dismiss="modal"><i class="icon glyphicon glyphicon-remove"></i>Cancel</button>
+                                <button type="button" class="btn btn-primary"><i class="icon glyphicon glyphicon-plane"></i>@Html.ActionLink("Leave Group", "LeaveHousehold", null, new { @style = "color:#fff" })</button>
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
+           

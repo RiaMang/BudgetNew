@@ -1,0 +1,115 @@
+﻿@model IEnumerable<Budget.Models.Category>
+
+@{
+
+}
+
+<div class="page-body">
+
+    <div class="row">
+        <div class="col-xs-12 col-md-6">
+            <div class="well with-header  with-footer">
+                <div class="header bg-blue">
+                    Categories
+                    @*<span class="pull-right">@Html.ActionLink(" Create New ", "Create")</span>*@
+                    
+                </div>
+                <table class="table table-hover">
+                    <thead class="bordered-darkorange">
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.CategoryType.Name)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Name)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CategoryType.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </td>
+                                <td>
+                                    <button class="ed btn btn-default" data-id="@item.Id"><i class="icon glyphicon glyphicon-edit"></i></button> 
+                                    
+                                    <button class="buton btn btn-default" data-toggle="modal" data-id="@item.Id"
+                                            data-target="#DeleteModal" data-name="@item.Name" data-type="@item.CategoryType.Name">
+                                        <i class="icon glyphicon glyphicon-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-xs-12 col-md-6">
+            <div id="editView">
+                @Html.Action("_Create") 
+            </div>
+        </div>
+</div>
+
+
+    <!--Delete Modal-->
+    <div class="modal modal-primary" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon glyphicon glyphicon-remove"></i></button>
+                    <h4 class="modal-title">Delete Category</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete this Category ? </p>
+                    <p>
+                        <div class="Name">Name:  </div>
+                        <br />
+                        <div class="Type">Type: </div>
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <div class="row">
+                        <div class="col-md-offset-7 col-md-2">
+                            <form id="delForm" action="~/Categories/Delete" method="post">
+                                @Html.AntiForgeryToken()
+                                <input id="formdata" type="hidden" name="id" value="" />
+
+                                <div class="form-actions no-color">
+
+                                    <button type="submit" value="Delete" class="btn btn-primary"><i class="icon glyphicon glyphicon-trash"></i>Delete</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-warning" data-dismiss="modal"><i class="icon glyphicon glyphicon-remove"></i>Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+@section scripts{
+    <script type="text/javascript">
+        $(function () {
+            $('.ed').click(function () {
+                $('#editView').load('/Categories/edit/' + $(this).data('id'));
+            });
+            $('.buton').click(function () {
+
+                $('#formdata').attr('value', $(this).attr('data-id'));
+                $('.Name').text($(this).attr('data-name'));
+                $('.Type').text($(this).data('type'));
+            });
+        });
+
+    </script>
+
+}
